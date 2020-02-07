@@ -1,0 +1,83 @@
+
+CREATE TABLE MOVIES
+   (	
+  ID INT , 
+	TITLE VARCHAR(300) NOT NULL , 
+	IMBD_ID INT, 
+	SPANISHTITLE VARCHAR(300), 
+	MOVIEYEAR INT NOT NULL , 
+	RTALLCRITICSRATING FLOAT NOT NULL , 
+	RTALLCRITICSNUMREVIEWS FLOAT NOT NULL , 
+	RTALLCRITICSNUMFRESH FLOAT, 
+	RTALLCRITICSNUMROTTEN FLOAT, 
+	RTALLCRITICSSCORE FLOAT, 
+	RTTOPCRITICSRATING FLOAT, 
+	RTTOPCRITICSNUMREVIEWS FLOAT, 
+	RTTOPCRITICSNUMFRESH FLOAT, 
+	RTTOPCRITICSNUMROTTEN FLOAT, 
+	RTTOPCRITICSSCORE FLOAT, 
+	RTAUDIENCERATING FLOAT, 
+	RTAUDIENCENUMRATINGS FLOAT, 
+	RTAUDIENCESCORE FLOAT, 
+  PRIMARY KEY (ID)
+   );
+
+CREATE TABLE GENRES
+(
+MovieID int,
+Genre varchar(100),
+Primary key(MovieID,Genre),
+Foreign key (MovieID) references Movies(ID)
+);
+
+CREATE TABLE MOVIE_COUNTRIES
+(
+MovieID int NOT NULL,
+Country varchar(100),
+Primary key(MovieID,Country),
+Foreign key (MovieID) references Movies(ID)
+);
+
+CREATE TABLE MOVIE_LOCATIONS(
+MovieID int NOT NULL,
+location1 varchar(200),
+location2 varchar(200),
+location3 varchar(200),
+location4 varchar(200),
+Foreign key (MovieID) references Movies(ID)
+)
+;
+
+CREATE TABLE TAGS(
+ID int PRIMARY KEY,
+Value varchar(100) NOT NULL
+);
+
+CREATE TABLE MOVIE_TAGS(
+MovieID int not null,
+tagID int not null,
+tagWeight int NOT NULL,
+FOREIGN KEY (MovieID) REFERENCES MOVIES(ID),
+FOREIGN KEY (TagID) REFERENCES TAGS(ID));
+
+CREATE TABLE ACTORS(
+movieID int,
+actorID varchar(300),
+actorName varchar(300),
+ranking int,
+PRIMARY KEY(movieID,actorID),
+FOREIGN KEY (MovieID) REFERENCES MOVIES(ID));
+
+CREATE TABLE DIRECTORS(
+movieID int,
+directorID varchar(300),
+directorName varchar(300),
+PRIMARY KEY(movieID,directorID),
+FOREIGN KEY (MovieID) REFERENCES MOVIES(ID));
+
+
+CREATE INDEX idx_genre ON GENRES(genre);
+CREATE INDEX idx_movie_year ON Movies(movieyear);
+CREATE INDEX idx_movie_country ON MOVIE_COUNTRIES(country);
+CREATE INDEX idx_movie_location ON MOVIE_LOCATIONS(Location1);
+CREATE INDEX idx_tag_weight ON MOVIE_TAGS(TAGWEIGHT);
